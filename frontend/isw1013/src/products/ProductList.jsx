@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Container, Table, Button, Card, Row, Col } from 'react-bootstrap'
 
 const ProductList = () => {
   const [products, setProducts] = useState([])
@@ -50,41 +51,63 @@ const ProductList = () => {
   }, [])
 
   return (
-    <div className="container">
-      <h2>Lista de Productos</h2>
+    <Container className="mt-5">
+      <Row className="mb-3">
+        <Col>
+          <h2 className="text-primary">Lista de Productos</h2>
+        </Col>
+        <Col className="text-end">
+          <Link to="/products/new">
+            <Button variant="success">Agregar Producto</Button>
+          </Link>
+        </Col>
+      </Row>
 
-      <Link to="/products/new">
-        <button>Agregar Producto</button>
-      </Link>
-
-      <table border="1" cellPadding="10" style={{ marginTop: '20px', width: '100%' }}>
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map(prod => (
-            <tr key={prod.id}>
-              <td>{prod.code}</td>
-              <td>{prod.name}</td>
-              <td>{prod.description}</td>
-              <td>{prod.quantity}</td>
-              <td>₡{Number(prod.price).toFixed(2)}</td>
-              <td>
-                <button onClick={() => navigate(`/products/edit/${prod.id}`)}>Editar</button>
-                <button style={{ marginLeft: '10px' }} onClick={() => handleDelete(prod.id)}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+      <Card className="shadow-sm border-0 rounded-4">
+        <Card.Body>
+          <Table striped bordered hover responsive className="align-middle">
+            <thead className="table-dark">
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th className="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map(prod => (
+                <tr key={prod.id}>
+                  <td>{prod.code}</td>
+                  <td>{prod.name}</td>
+                  <td>{prod.description}</td>
+                  <td>{prod.quantity}</td>
+                  <td>₡{Number(prod.price).toFixed(2)}</td>
+                  <td className="text-center">
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      className="me-2"
+                      onClick={() => navigate(`/products/edit/${prod.id}`)}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleDelete(prod.id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Card.Body>
+      </Card>
+    </Container>
   )
 }
 

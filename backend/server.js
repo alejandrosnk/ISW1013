@@ -9,11 +9,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS para aceptar cualquier dominio
 app.use(cors({
-  origin: process.env.DOMAIN || "*",
+  origin: "*", // acepta cualquier origen
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  credentials: false // debe estar en false si origin es "*"
 }));
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 

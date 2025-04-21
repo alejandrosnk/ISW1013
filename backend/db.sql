@@ -9,6 +9,10 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL DEFAULT 'user' 
 );
+
+ALTER TABLE users
+ADD COLUMN last_login TIMESTAMP;
+
 ALTER TABLE users
 ADD CONSTRAINT role_check
 CHECK (role IN ('admin', 'auditor', 'register'));

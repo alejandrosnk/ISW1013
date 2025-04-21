@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
+import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap'
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -16,9 +17,7 @@ const Login = () => {
     try {
       const response = await fetch('http://localhost:3000/users/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       })
 
@@ -29,11 +28,10 @@ const Login = () => {
       const data = await response.json()
       const token = data.token
 
-      // Decodificar JWT para obtener el rol (sin librerías externas)
       const payload = JSON.parse(atob(token.split('.')[1]))
       const role = payload.role
 
-      login(token, role) // guarda en context y localStorage
+      login(token, role)
       navigate('/')
     } catch (err) {
       console.error(err)
@@ -42,31 +40,45 @@ const Login = () => {
   }
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto' }}>
-      <h2>Iniciar sesión</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Usuario:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Ingresar</button>
-      </form>
-    </div>
+    <Container className="vh-100 d-flex justify-content-center align-items-center bg-light">
+      <Row className="w-100">
+        <Col md={{ span: 6, offset: 3 }}>
+          <Card className="shadow-lg border-0 rounded-4 p-4">
+            <Card.Body>
+              <h2 className="text-center text-primary mb-4">Iniciar sesión</h2>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Form onSubmit={handleLogin}>
+                <Form.Group className="mb-3" controlId="username">
+                  <Form.Label>Usuario</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Ingrese su usuario"
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-4" controlId="password">
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Ingrese su contraseña"
+                    required
+                  />
+                </Form.Group>
+                <div className="d-grid">
+                  <Button variant="primary" type="submit" size="lg">
+                    Ingresar
+                  </Button>
+                </div>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

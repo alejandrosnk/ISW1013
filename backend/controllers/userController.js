@@ -24,9 +24,15 @@ router.post("/login", async (req, res) => {
       return res.status(401).json("Nombre de usuario o contraseña incorrectos.");
     }
 
-    const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    // 🕒 Actualizar campo de último login
+    await pool.query("UPDATE users SET last_login = NOW() WHERE id = $1", [user.id]);
+
+    // 🔐 Generar token
+    const token = jwt.sign(
+      { id: user.id, username: user.username, role: user.role },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.json({ token });
   } catch (err) {
@@ -34,6 +40,7 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Error en el servidor" });
   }
 });
+
 
 // Verifica token
 router.get("/verify", autenticarToken, (req, res) => {

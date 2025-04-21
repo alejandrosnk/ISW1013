@@ -1,62 +1,61 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { Navbar, Nav, Container, Button } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
 
-const Navbar = () => {
+const AppNavbar = () => {
   const { user, logout } = useContext(AuthContext)
+  const navigate = useNavigate()
 
-  if (!user) return null // No mostrar navbar si no hay sesión
+  if (!user) return null
 
   const { role } = user
 
   return (
-    <nav style={styles.nav}>
-      <div>
-        <strong>Rol:</strong> {role}
-      </div>
+    <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+      <Container>
+        <Navbar.Brand as={Link} to="/">
+          Sistema
+        </Navbar.Brand>
 
-      <div style={styles.links}>
-        <Link to="/">Inicio</Link>
+        <Navbar.Toggle aria-controls="main-navbar" />
+        <Navbar.Collapse id="main-navbar">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">
+              Inicio
+            </Nav.Link>
 
-        {(role === 'admin' || role === 'Registrador' || role === 'Auditor') && (
-          <Link to="/products">Productos</Link>
-        )}
+            {(role === 'admin' || role === 'Registrador' || role === 'Auditor') && (
+              <Nav.Link as={Link} to="/products">
+                Productos
+              </Nav.Link>
+            )}
 
-        {(role === 'admin' || role === 'Registrador' || role === 'Auditor') && (
-          <Link to="/users">Usuarios</Link>
-        )}
+            {(role === 'admin' || role === 'Registrador' || role === 'Auditor') && (
+              <Nav.Link as={Link} to="/users">
+                Usuarios
+              </Nav.Link>
+            )}
 
-        {role === 'admin' && <Link to="/roles">Roles</Link>}
+            {role === 'admin' && (
+              <Nav.Link as={Link} to="/roles">
+                Roles
+              </Nav.Link>
+            )}
+          </Nav>
 
-        <button onClick={logout} style={styles.logout}>
-          Cerrar sesión
-        </button>
-      </div>
-    </nav>
+          <Nav className="align-items-center">
+            <span className="text-light me-3">
+              <strong>Rol:</strong> {role}
+            </span>
+            <Button variant="danger" size="sm" onClick={() => logout(navigate)}>
+              Cerrar sesión
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   )
 }
 
-const styles = {
-  nav: {
-    padding: '10px 20px',
-    backgroundColor: '#222',
-    color: '#fff',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  links: {
-    display: 'flex',
-    gap: '10px',
-    alignItems: 'center',
-  },
-  logout: {
-    backgroundColor: '#e63946',
-    border: 'none',
-    color: '#fff',
-    padding: '5px 10px',
-    cursor: 'pointer',
-  },
-}
-
-export default Navbar
+export default AppNavbar
