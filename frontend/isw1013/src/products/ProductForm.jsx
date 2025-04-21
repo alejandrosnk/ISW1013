@@ -44,7 +44,7 @@ const ProductForm = () => {
     const token = localStorage.getItem('token')
     const method = id ? 'PUT' : 'POST'
     const endpoint = id ? `http://localhost:3000/products/${id}` : `http://localhost:3000/products`
-
+  
     try {
       const res = await fetch(endpoint, {
         method,
@@ -54,7 +54,12 @@ const ProductForm = () => {
         },
         body: JSON.stringify(formData)
       })
-
+  
+      if (res.status === 403) {
+        alert("No tienes los permisos para esta acción. Debes ser administrador o registrador.")
+        return
+      }
+  
       if (res.ok) {
         navigate('/products')
       } else {
@@ -64,6 +69,7 @@ const ProductForm = () => {
       console.error(err)
     }
   }
+  
 
   return (
     <Container className="vh-100 d-flex justify-content-center align-items-center bg-light">

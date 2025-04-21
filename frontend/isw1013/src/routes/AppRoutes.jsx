@@ -57,7 +57,7 @@ const AppRoutes = () => {
       <Route
         path="/products"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN, ROLES.REGISTRADOR, ROLES.AUDITOR]}>
+          <ProtectedRoute>
             <ProductList />
           </ProtectedRoute>
         }
@@ -65,7 +65,7 @@ const AppRoutes = () => {
       <Route
         path="/products/new"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN, ROLES.REGISTRADOR]}>
+          <ProtectedRoute>
             <ProductForm />
           </ProtectedRoute>
         }
@@ -73,7 +73,7 @@ const AppRoutes = () => {
       <Route
         path="/products/edit/:id"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN, ROLES.REGISTRADOR]}>
+          <ProtectedRoute>
             <ProductForm />
           </ProtectedRoute>
         }
@@ -83,7 +83,7 @@ const AppRoutes = () => {
       <Route
         path="/users"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN, ROLES.REGISTRADOR, ROLES.AUDITOR]}>
+          <ProtectedRoute>
             <UserList />
           </ProtectedRoute>
         }
@@ -91,7 +91,7 @@ const AppRoutes = () => {
       <Route
         path="/users/new"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN]}>
+          <ProtectedRoute>
             <UserForm />
           </ProtectedRoute>
         }
@@ -99,7 +99,7 @@ const AppRoutes = () => {
       <Route
         path="/users/edit/:id"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN]}>
+          <ProtectedRoute>
             <UserForm />
           </ProtectedRoute>
         }
@@ -107,7 +107,7 @@ const AppRoutes = () => {
       <Route
         path="/users/:id"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN, ROLES.REGISTRADOR, ROLES.AUDITOR]}>
+          <ProtectedRoute>
             <UserDetail />
           </ProtectedRoute>
         }
@@ -117,7 +117,7 @@ const AppRoutes = () => {
       <Route
         path="/roles"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN]}>
+          <ProtectedRoute>
             <RoleList />
           </ProtectedRoute>
         }
@@ -125,7 +125,7 @@ const AppRoutes = () => {
       <Route
         path="/roles/new"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN]}>
+          <ProtectedRoute>
             <RoleForm />
           </ProtectedRoute>
         }
@@ -133,7 +133,7 @@ const AppRoutes = () => {
       <Route
         path="/roles/edit/:id"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN]}>
+          <ProtectedRoute>
             <RoleForm />
           </ProtectedRoute>
         }
@@ -141,7 +141,7 @@ const AppRoutes = () => {
       <Route
         path="/roles/:id"
         element={
-          <ProtectedRoute allowedRoles={[ROLES.SUPERADMIN]}>
+          <ProtectedRoute>
             <RoleDetail />
           </ProtectedRoute>
         }

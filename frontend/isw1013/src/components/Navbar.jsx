@@ -25,23 +25,16 @@ const AppNavbar = () => {
               Inicio
             </Nav.Link>
 
-            {(role === 'admin' || role === 'Registrador' || role === 'Auditor') && (
               <Nav.Link as={Link} to="/products">
                 Productos
               </Nav.Link>
-            )}
 
-            {(role === 'admin' || role === 'Registrador' || role === 'Auditor') && (
+
               <Nav.Link as={Link} to="/users">
                 Usuarios
               </Nav.Link>
-            )}
 
-            {role === 'admin' && (
-              <Nav.Link as={Link} to="/roles">
-                Roles
-              </Nav.Link>
-            )}
+
           </Nav>
 
           <Nav className="align-items-center">

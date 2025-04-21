@@ -26,7 +26,7 @@ const ProductList = () => {
   const handleDelete = async (id) => {
     const confirm = window.confirm('¿Estás seguro de eliminar este producto?')
     if (!confirm) return
-
+  
     try {
       const token = localStorage.getItem('token')
       const res = await fetch(`http://localhost:3000/products/${id}`, {
@@ -35,7 +35,12 @@ const ProductList = () => {
           Authorization: `Bearer ${token}`
         }
       })
-
+  
+      if (res.status === 403) {
+        alert("No tienes los permisos para esta acción. Debes ser administrador o registrador.")
+        return
+      }
+  
       if (res.ok) {
         fetchProducts()
       } else {
@@ -45,6 +50,7 @@ const ProductList = () => {
       console.error(err)
     }
   }
+  
 
   useEffect(() => {
     fetchProducts()

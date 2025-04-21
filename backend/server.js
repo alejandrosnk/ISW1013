@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Limitador de login
 const loginLimiter = rateLimit({
   windowMs: 2 * 60 * 1000,
-  max: 3,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
