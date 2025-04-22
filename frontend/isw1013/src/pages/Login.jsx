@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap'
@@ -9,6 +9,10 @@ const Login = () => {
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const { login } = useContext(AuthContext)
+
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
 
   const handleLogin = async (e) => {
     e.preventDefault()
